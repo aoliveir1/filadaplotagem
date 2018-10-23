@@ -20,10 +20,10 @@ def get_pendentes():
     while True:
         browser = Browser('chrome', headless = True)
         browser.visit(os.environ.get('URL_LOGIN'))
-        browser.fill('username', USERNAME)
-        browser.fill('password', PASSWORD)
+        browser.fill('username', os.environ.get('USERNAME'))
+        browser.fill('password', os.environ.get('PASSWORD'))
         browser.find_by_name('login_copista').click()
-        browser.visit(URL_PENDENTES)
+        browser.visit(os.environ.get('URL_PENDENTES'))
  
         if 'Nenhum protocolo encontrado.' not in browser.html:
             soup = BeautifulSoup(browser.html, 'html.parser')
