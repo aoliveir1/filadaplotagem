@@ -39,11 +39,10 @@ def get_pendentes():
                     arquivo = plot[36:46].upper()
                     plotagem = {'data': data, 'protocolo':protocolo, 'arquivo':arquivo}
                     temp.append(plotagem)
-
+                    
         browser.quit()
         protocolos = temp 
         atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
-        
         time.sleep(20*60)
 
 t = threading.Thread(target=get_pendentes)
