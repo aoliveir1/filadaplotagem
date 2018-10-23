@@ -1,28 +1,25 @@
 import time
 import datetime
+import pytz
 import os
-import json
+import threading
 import bottle
-from bottle import route, run, SimpleTemplate, template
+from bottle import route, run, template
 from splinter import Browser
 from bs4 import BeautifulSoup
-import threading
-import datetime
 
 app = bottle.default_app()
 
 protocolos = []
-
-atualizado = datetime.datetime.now().strftime('%d/%m/%Y %H:%M')
+tz = pytz.timezone('America/Sao_Paulo')
+atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
 
 def get_pendentes():
     global protocolos
     global atualizado
     
     while True:
-        protocolos.clear()
-        
-        browser = Browser('chrome', executable_path = 'C:/Plotagem/webdriver/win_7/chromedriver.exe', headless = True)
+        browser = Browser('chrome', headless = True)
         browser.visit(URL_LOGIN)
         browser.fill('username', USERNAME)
         browser.fill('password', PASSWORD)
@@ -33,17 +30,20 @@ def get_pendentes():
             soup = BeautifulSoup(browser.html, 'html.parser')
             plots = soup.find_all('div', attrs={'class': 'titulo'})
 
+            temp = []
             for i, plot in enumerate(plots):
                 if i > 0:
                     plot = str(plot.text.strip())
                     data = datetime.datetime.strptime(plot[:16].strip(), '%d/%m/%Y %H:%M').strftime('%d/%m/%Y %H:%M')
                     protocolo = plot[21:31]
-                    arquivo = plot[36:].replace(' - ', '-').replace(' ', '-').replace('(', '').replace(')','').replace('.pdf', '').replace('.', '').replace('?','').replace('ã','a').replace('ó','o')
-                    plotagem = {'data': data, 'protocolo':protocolo, 'arquivo':arquivo[:8].upper()}
-                    protocolos.append(plotagem)
+                    arquivo = plot[36:46].upper()
+                    plotagem = {'data': data, 'protocolo':protocolo, 'arquivo':arquivo}
+                    temp.append(plotagem)
 
-        atualizado = datetime.datetime.now().strftime('%d/%m/%Y %H:%M')     
         browser.quit()
+        protocolos = temp 
+        atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
+        
         time.sleep(20*60)
 
 t = threading.Thread(target=get_pendentes)
@@ -56,4 +56,4 @@ def pendentes():
     global atualizado
     return template('t', protocolos=protocolos, atualizado=atualizado)
 
-run(host='localhost', port=8080)
+run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
