@@ -8,6 +8,8 @@ from bottle import response, route, run, template
 from splinter import Browser
 from bs4 import BeautifulSoup
 
+print('oi')
+
 app = bottle.default_app()
 total = 0
 protocolos = []
@@ -15,6 +17,7 @@ tz = pytz.timezone('America/Sao_Paulo')
 atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
 
 def get_pendentes():
+    print('oi f')
     global protocolos
     global atualizado
     
@@ -27,6 +30,8 @@ def get_pendentes():
         browser.fill('password', os.environ.get('PASSWORD'))
         browser.find_by_name('login_copista').click()
         browser.visit(os.environ.get('URL_PENDENTES'))
+        
+        print(broswer.url)
  
         if 'Nenhum protocolo encontrado.' not in browser.html:
             soup = BeautifulSoup(browser.html, 'html.parser')
@@ -47,6 +52,7 @@ def get_pendentes():
         atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
         time.sleep(120)
 
+print('oi s')
 t = threading.Thread(target=get_pendentes)
 t.daemon = True
 t.start()
