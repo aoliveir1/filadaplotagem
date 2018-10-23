@@ -1,5 +1,13 @@
 <html>
 <head>
+<style>
+div {
+    padding: 50px;
+    border: 1px solid #4CAF50;
+}
+td, th {padding: 2px 15px 2px;
+}
+</style>
 </head>
 <body>
 <div>
