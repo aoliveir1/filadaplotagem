@@ -52,7 +52,7 @@ def get_pendentes():
 
 print('oi s')
 t = threading.Thread(target=get_pendentes)
-t.daemon = True
+#t.daemon = True
 t.start()
 
 @route('/', 'GET')
