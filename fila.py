@@ -4,7 +4,7 @@ import pytz
 import os
 import threading
 import bottle
-from bottle import route, run, template
+from bottle import response, route, run, template
 from splinter import Browser
 from bs4 import BeautifulSoup
 
@@ -19,6 +19,8 @@ def get_pendentes():
     global atualizado
     
     while True:
+        response.headers['Content-Type'] = 'application/json'
+        response.headers['Cache-Control'] = 'no-cache'
         browser = Browser('chrome', headless = True)
         browser.visit(os.environ.get('URL_LOGIN'))
         browser.fill('username', os.environ.get('USERNAME'))
