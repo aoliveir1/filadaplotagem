@@ -22,8 +22,6 @@ def get_pendentes():
     global atualizado
     
     while True:
-        response.headers['Content-Type'] = 'application/json'
-        response.headers['Cache-Control'] = 'no-cache'
         browser = Browser('chrome', headless = True)
         browser.visit(os.environ.get('URL_LOGIN'))
         browser.fill('username', os.environ.get('USERNAME'))
