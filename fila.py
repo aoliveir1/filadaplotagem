@@ -9,7 +9,6 @@ from splinter import Browser
 from bs4 import BeautifulSoup
 
 app = bottle.default_app()
-
 protocolos = []
 tz = pytz.timezone('America/Sao_Paulo')
 atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
