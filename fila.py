@@ -24,6 +24,7 @@ def get_pendentes():
         browser.fill('password', PASSWORD)
         browser.find_by_name('login_copista').click()
         browser.visit(URL_PENDENTES)
+        print(browser.html)
 
         if 'Nenhum protocolo encontrado.' not in browser.html:
             soup = BeautifulSoup(browser.html, 'html.parser')
@@ -42,7 +43,7 @@ def get_pendentes():
         browser.quit()
         protocolos = temp 
         atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
-        time.sleep(20*60)
+        time.sleep(120)
 
 t = threading.Thread(target=get_pendentes)
 t.daemon = True
