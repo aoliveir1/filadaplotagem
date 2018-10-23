@@ -29,8 +29,6 @@ def get_pendentes():
         browser.find_by_name('login_copista').click()
         browser.visit(os.environ.get('URL_PENDENTES'))
         
-        print(broswer.url)
- 
         if 'Nenhum protocolo encontrado.' not in browser.html:
             soup = BeautifulSoup(browser.html, 'html.parser')
             plots = soup.find_all('div', attrs={'class': 'titulo'})
