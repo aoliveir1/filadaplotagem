@@ -15,7 +15,6 @@ tz = pytz.timezone('America/Sao_Paulo')
 atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
 
 def get_pendentes():
-    print('oi f')
     global protocolos
     global atualizado
     
@@ -47,7 +46,6 @@ def get_pendentes():
         time.sleep(120)
 
 t = threading.Thread(target=get_pendentes)
-#t.daemon = True
 t.start()
 
 @route('/', 'GET')
