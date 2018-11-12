@@ -36,8 +36,23 @@ def get_pendentes():
                     plot = str(plot.text.strip())
                     data = datetime.datetime.strptime(plot[:16].strip(), '%d/%m/%Y %H:%M').strftime('%d/%m/%Y %H:%M')
                     protocolo = plot[21:31]
-                    arquivo = plot[36:46].upper()
-                    plotagem = {'data': data, 'protocolo':protocolo, 'arquivo':arquivo}
+                    try:
+                        #login = plot[36:].rstrip('_')
+                        pos = plot[36:].find('_')
+                        login = plot[36:36+pos]
+                        login = (login[:3]+'..'+login[len(login)-1:]).lower()
+                    except:
+                        login = 'nao-indentificado'
+
+                    browser.visit(f'https://ucsvirtual.ucs.br/impressoes/plotista/{protocolo}')
+                    soup = BeautifulSoup(browser.html, 'html.parser')
+                    folha = soup.find_all('table')
+                    folha = str(folha)
+                    pos = folha.find('Tipo de folha:')                
+                    a = folha.find('A', pos)
+                    folha = folha[a:a+2]               
+
+                    plotagem = {'data': data, 'protocolo':protocolo, 'login':login, 'folha':folha}
                     temp.append(plotagem)
                     
         browser.quit()
