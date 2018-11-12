@@ -8,8 +8,6 @@ from bottle import response, route, run, template
 from splinter import Browser
 from bs4 import BeautifulSoup
 
-print('oi')
-
 app = bottle.default_app()
 total = 0
 protocolos = []
@@ -48,7 +46,6 @@ def get_pendentes():
         atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
         time.sleep(120)
 
-print('oi s')
 t = threading.Thread(target=get_pendentes)
 #t.daemon = True
 t.start()
