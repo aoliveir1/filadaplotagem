@@ -26,7 +26,7 @@ td, th {padding: 2px 15px 2px;
 			Login
 		</th>
 		<th>
-			Folha
+			Tamanho da folha
 		</th>
 	</tr>
 	% for protocolo in protocolos:
