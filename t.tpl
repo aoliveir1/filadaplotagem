@@ -13,6 +13,7 @@ td, th {padding: 2px 15px 2px;
 <div>
 <h1>Lista de Plotagens Pendentes</h1>
 % if len(protocolos) > 0:
+	<h2>Total de protocolos: {{ len(protocolos) }}</h2>
 	<table>
 	<tr>
 		<th>
