@@ -23,7 +23,10 @@ td, th {padding: 2px 15px 2px;
 			Protocolo
 		</th>
 		<th>
-			Arquivo
+			Login
+		</th>
+		<th>
+			Folha
 		</th>
 	</tr>
 	% for protocolo in protocolos:
@@ -35,7 +38,10 @@ td, th {padding: 2px 15px 2px;
 				{{ protocolo['protocolo'] }}
 			</td>
 			<td>
-				{{ protocolo['arquivo'] }}
+				{{ protocolo['login'] }}
+			</td>
+			<td>
+				{{ protocolo['folha'] }}
 			</td>
 	    	</tr>	
 	% end
