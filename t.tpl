@@ -5,6 +5,9 @@ div {
     padding: 50px;
     border: 1px solid #4CAF50;
 }
+table{
+	text-align: center;
+}
 td, th {padding: 2px 15px 2px;
 }
 </style>
@@ -26,7 +29,7 @@ td, th {padding: 2px 15px 2px;
 			Login
 		</th>
 		<th>
-			Tamanho da folha
+			Folha
 		</th>
 	</tr>
 	% for protocolo in protocolos:
