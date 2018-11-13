@@ -19,9 +19,11 @@ def get_pendentes():
     global protocolos
     global atualizado
     global temp
+    global alerta
+    
+    alerta = ''
     
     while True:
-        
         try:        
             browser = Browser('chrome', headless = True)
             browser.visit(os.environ.get('URL_LOGIN'))
@@ -59,17 +61,17 @@ def get_pendentes():
                         plotagem = {'data': data, 'protocolo':protocolo, 'login':login, 'folha':folha}                    
                         temp.append(plotagem)                    
 
-            browser.quit()
-        except:
-            alerta = 'Ops, não foi possível verificar a lista de pendentes, aguarde uns minutos e tente novamente'
-            
-        protocolos = temp 
-        atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
-        
-        if datetime.datetime.now(tz=tz).hour >= 8 & datetime.datetime.now(tz=tz).hour <= 22:
-            time.sleep(60*5)
-        else:
-            time.sleep(60*10)
+        browser.quit()
+    except:
+        alerta = 'Ops, não foi possível verificar a lista de pendentes, aguarde uns minutos e tente novamente'
+
+    protocolos = temp 
+    atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
+
+    if datetime.datetime.now(tz=tz).hour >= 8 & datetime.datetime.now(tz=tz).hour <= 22:
+        time.sleep(60*5)
+    else:
+        time.sleep(60*10)
 
 t = threading.Thread(target=get_pendentes)
 t.start()
