@@ -9,7 +9,6 @@ from splinter import Browser
 from bs4 import BeautifulSoup
 
 app = bottle.default_app()
-#total = 0
 temp = []
 protocolos = []
 tz = pytz.timezone('America/Sao_Paulo')
@@ -42,7 +41,7 @@ def get_pendentes():
                         #login = plot[36:].rstrip('_')
                         pos = plot[36:].find('_')
                         login = plot[36:36+pos]
-                        login = (login[:3]+'..'+login[len(login)-1:]).lower()
+                        login = (login[:3]+'..'+login[len(login)-1:]).upper()
                     except:
                         login = 'nao-indentificado'
 
@@ -58,10 +57,16 @@ def get_pendentes():
                     temp.append(plotagem)
                     
         browser.quit()
+        
         if len(temp) > 0:
             protocolos = temp 
+            
         atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
-        time.sleep(120)
+        
+        if datetime.datetime.now(tz=tz).hour >= 8 & datetime.datetime.now(tz=tz).hour <= 22:
+            time.sleep(60*5)
+        else:
+            time.sleep(60*10)
 
 t = threading.Thread(target=get_pendentes)
 t.start()
