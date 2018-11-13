@@ -57,10 +57,7 @@ def get_pendentes():
                     temp.append(plotagem)
                     
         browser.quit()
-        
-        if len(temp) > 0:
-            protocolos = temp 
-            
+        protocolos = temp 
         atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
         
         if datetime.datetime.now(tz=tz).hour >= 8 & datetime.datetime.now(tz=tz).hour <= 22:
