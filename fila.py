@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 
 app = bottle.default_app()
 #total = 0
+temp = []
 protocolos = []
 tz = pytz.timezone('America/Sao_Paulo')
 atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
@@ -17,6 +18,7 @@ atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
 def get_pendentes():
     global protocolos
     global atualizado
+    global temp
     
     while True:
         browser = Browser('chrome', headless = True)
@@ -56,7 +58,8 @@ def get_pendentes():
                     temp.append(plotagem)
                     
         browser.quit()
-        protocolos = temp 
+        if len(temp) > 0:
+            protocolos = temp 
         atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
         time.sleep(120)
 
