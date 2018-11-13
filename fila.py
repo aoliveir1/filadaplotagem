@@ -13,65 +13,59 @@ temp = []
 protocolos = []
 tz = pytz.timezone('America/Sao_Paulo')
 atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
-alerta = ''
 
 def get_pendentes():
     global protocolos
     global atualizado
     global temp
     global alerta
-    
-    alerta = ''
-    
-    while True:
-        try:        
-            browser = Browser('chrome', headless = True)
-            browser.visit(os.environ.get('URL_LOGIN'))
-            browser.fill('username', os.environ.get('USERNAME'))
-            browser.fill('password', os.environ.get('PASSWORD'))
-            browser.find_by_name('login_copista').click()
-            browser.visit(os.environ.get('URL_PENDENTES'))
-            
-            temp = []
-            if 'Nenhum protocolo encontrado.' not in browser.html:
-                soup = BeautifulSoup(browser.html, 'html.parser')
-                plots = soup.find_all('div', attrs={'class': 'titulo'})
+      
+    while True:    
+        browser = Browser('chrome', headless = True)
+        browser.visit(os.environ.get('URL_LOGIN'))
+        browser.fill('username', os.environ.get('USERNAME'))
+        browser.fill('password', os.environ.get('PASSWORD'))
+        browser.find_by_name('login_copista').click()
+        browser.visit(os.environ.get('URL_PENDENTES'))
 
-                for i, plot in enumerate(plots):
-                    if i > 0:
-                        plot = str(plot.text.strip())
-                        data = datetime.datetime.strptime(plot[:16].strip(), '%d/%m/%Y %H:%M').strftime('%d/%m/%Y %H:%M')
-                        protocolo = plot[21:31]
-                        try:
-                            #login = plot[36:].rstrip('_')
-                            pos = plot[36:].find('_')
-                            login = plot[36:36+pos]
-                            login = (login[:3]+'..'+login[len(login)-1:]).upper()
-                        except:
-                            login = 'nao-indentificado'
+        temp = []
+        if 'Nenhum protocolo encontrado.' not in browser.html:
+            soup = BeautifulSoup(browser.html, 'html.parser')
+            plots = soup.find_all('div', attrs={'class': 'titulo'})
 
-                        browser.visit(f'https://ucsvirtual.ucs.br/impressoes/plotista/{protocolo}')
-                        soup = BeautifulSoup(browser.html, 'html.parser')
-                        folha = soup.find_all('table')
-                        folha = str(folha)
-                        pos = folha.find('Tipo de folha:')                
-                        a = folha.find('A', pos)
-                        folha = folha[a:a+2]               
+            for i, plot in enumerate(plots):
+                if i > 0:
+                    plot = str(plot.text.strip())
+                    data = datetime.datetime.strptime(plot[:16].strip(), '%d/%m/%Y %H:%M').strftime('%d/%m/%Y %H:%M')
+                    protocolo = plot[21:31]
+                    try:
+                        #login = plot[36:].rstrip('_')
+                        pos = plot[36:].find('_')
+                        login = plot[36:36+pos]
+                        login = (login[:3]+'..'+login[len(login)-1:]).upper()
+                    except:
+                        login = 'nao-indentificado'
 
-                        plotagem = {'data': data, 'protocolo':protocolo, 'login':login, 'folha':folha}                    
-                        temp.append(plotagem)                    
+                    browser.visit(f'https://ucsvirtual.ucs.br/impressoes/plotista/{protocolo}')
+                    soup = BeautifulSoup(browser.html, 'html.parser')
+                    folha = soup.find_all('table')
+                    folha = str(folha)
+                    pos = folha.find('Tipo de folha:')                
+                    a = folha.find('A', pos)
+                    folha = folha[a:a+2]               
 
-            browser.quit()
-        except:
-            alerta = 'Ops, não foi possível verificar a lista de pendentes, aguarde uns minutos e tente novamente'
+                    plotagem = {'data': data, 'protocolo':protocolo, 'login':login, 'folha':folha}                    
+                    temp.append(plotagem)                    
 
-    protocolos = temp 
-    atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
+        browser.quit()
 
-    if datetime.datetime.now(tz=tz).hour >= 8 & datetime.datetime.now(tz=tz).hour <= 22:
-        time.sleep(60*5)
-    else:
-        time.sleep(60*10)
+        protocolos = temp 
+        atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
+
+        if datetime.datetime.now(tz=tz).hour >= 8 & datetime.datetime.now(tz=tz).hour <= 22:
+            time.sleep(60*5)
+        else:
+            time.sleep(60*10)
 
 t = threading.Thread(target=get_pendentes)
 t.start()
