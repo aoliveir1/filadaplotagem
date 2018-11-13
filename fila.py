@@ -18,7 +18,6 @@ def get_pendentes():
     global protocolos
     global atualizado
     global temp
-    global alerta
       
     while True:    
         browser = Browser('chrome', headless = True)
@@ -64,8 +63,11 @@ def get_pendentes():
 
         if datetime.datetime.now(tz=tz).hour >= 8 & datetime.datetime.now(tz=tz).hour <= 22:
             time.sleep(60*5)
-        else:
+        if datetime.datetime.now(tz=tz).hour >= 7 & datetime.datetime.now(tz=tz).hour <= 23:
             time.sleep(60*10)
+        else:
+            time.sleep(60*20)
+            
 
 t = threading.Thread(target=get_pendentes)
 t.start()
