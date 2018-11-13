@@ -40,7 +40,7 @@ td, th {padding: 2px 15px 2px;
 			<td>
 				{{ protocolo['protocolo'] }}
 			</td>
-			<td>
+			<td style='letter-spacing: 2px;'}>
 				{{ protocolo['login'] }}
 			</td>
 			<td>
