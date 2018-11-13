@@ -54,8 +54,7 @@ def get_pendentes():
                     folha = folha[a:a+2]               
 
                     plotagem = {'data': data, 'protocolo':protocolo, 'login':login, 'folha':folha}                    
-                    #temp.append(plotagem)
-                    protocolos.append(plotagem)
+                    temp.append(plotagem)                    
                     
         browser.quit()
         protocolos = temp 
