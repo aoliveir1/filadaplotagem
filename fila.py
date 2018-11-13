@@ -74,6 +74,6 @@ t.start()
 def pendentes():
     global protocolos
     global atualizado
-    return template('t', protocolos=protocolos, atualizado=atualizado, alerta=alerta)
+    return template('t', protocolos=protocolos, atualizado=atualizado)
 
 run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
