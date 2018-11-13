@@ -61,9 +61,9 @@ def get_pendentes():
                         plotagem = {'data': data, 'protocolo':protocolo, 'login':login, 'folha':folha}                    
                         temp.append(plotagem)                    
 
-        browser.quit()
-    except:
-        alerta = 'Ops, não foi possível verificar a lista de pendentes, aguarde uns minutos e tente novamente'
+            browser.quit()
+        except:
+            alerta = 'Ops, não foi possível verificar a lista de pendentes, aguarde uns minutos e tente novamente'
 
     protocolos = temp 
     atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
