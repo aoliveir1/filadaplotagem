@@ -15,6 +15,10 @@ td, th {padding: 2px 15px 2px;
 <body>
 <div>
 <h1>Lista de Plotagens Pendentes</h1>
+
+% if len(alerta) > 1:
+	<p>{{ alerta }}</p>
+	
 % if len(protocolos) > 0:
 	<p>Total de protocolos pendentes: {{ len(protocolos) }}</p>
 	<table>
