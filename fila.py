@@ -9,7 +9,7 @@ from splinter import Browser
 from bs4 import BeautifulSoup
 
 app = bottle.default_app()
-#temp = []
+temp = []
 protocolos = []
 tz = pytz.timezone('America/Sao_Paulo')
 atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
@@ -17,7 +17,7 @@ atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
 def get_pendentes():
     global protocolos
     global atualizado
-    #global temp
+    global temp
     
     while True:
         browser = Browser('chrome', headless = True)
@@ -27,12 +27,11 @@ def get_pendentes():
         browser.find_by_name('login_copista').click()
         browser.visit(os.environ.get('URL_PENDENTES'))
         
-        protocolos = []
         if 'Nenhum protocolo encontrado.' not in browser.html:
             soup = BeautifulSoup(browser.html, 'html.parser')
             plots = soup.find_all('div', attrs={'class': 'titulo'})
 
-            #temp = []
+            temp = []
             for i, plot in enumerate(plots):
                 if i > 0:
                     plot = str(plot.text.strip())
@@ -59,7 +58,7 @@ def get_pendentes():
                     protocolos.append(plotagem)
                     
         browser.quit()
-        #protocolos = temp 
+        protocolos = temp 
         atualizado = datetime.datetime.now(tz=tz).strftime('%d/%m/%Y %H:%M')
         
         if datetime.datetime.now(tz=tz).hour >= 8 & datetime.datetime.now(tz=tz).hour <= 22:
