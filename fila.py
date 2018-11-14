@@ -37,6 +37,7 @@ def get_pendentes():
                     plot = str(plot.text.strip())
                     data = datetime.datetime.strptime(plot[:16].strip(), '%d/%m/%Y %H:%M').strftime('%d/%m/%Y %H:%M')
                     protocolo = plot[21:31]
+                    protocolo_f = protocolo[:4]+'x'*4
                     try:
                         #login = plot[36:].rstrip('_')
                         pos = plot[36:].find('_')
@@ -53,7 +54,7 @@ def get_pendentes():
                     a = folha.find('A', pos)
                     folha = folha[a:a+2]               
 
-                    plotagem = {'data': data, 'protocolo':protocolo, 'login':login, 'folha':folha}                    
+                    plotagem = {'data': data, 'protocolo':protocolo_f, 'login':login, 'folha':folha}                    
                     temp.append(plotagem)                    
 
         browser.quit()
