@@ -42,11 +42,11 @@ def get_pendentes():
                         #login = plot[36:].rstrip('_')
                         pos = plot[36:].find('_')
                         login = plot[36:36+pos]
-                        login = (login[:3]+'..'+login[len(login)-1:]).upper()
+                        login = (login[:3]+'. .'+login[len(login)-1:]).upper()
                     except:
                         login = 'nao-indentificado'
 
-                    browser.visit(f'https://ucsvirtual.ucs.br/impressoes/plotista/{protocolo}')
+                    browser.visit(os.environ.get('URL_PROTOCOLO')+protocolo)
                     soup = BeautifulSoup(browser.html, 'html.parser')
                     folha = soup.find_all('table')
                     folha = str(folha)
