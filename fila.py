@@ -47,6 +47,7 @@ def get_pendentes():
                         login = 'nao-indentificado'
 
                     browser.visit(os.environ.get('URL_PROTOCOLO')+protocolo)
+                    print(os.environ.get('URL_PROTOCOLO')+protocolo))
                     soup = BeautifulSoup(browser.html, 'html.parser')
                     folha = soup.find_all('table')
                     folha = str(folha)
