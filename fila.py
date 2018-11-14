@@ -46,14 +46,16 @@ def get_pendentes():
                     except:
                         login = 'nao-indentificado'
 
-                    browser.visit(os.environ.get('URL_PROTOCOLO')+protocolo)
-                    print(os.environ.get('URL_PROTOCOLO')+protocolo)
-                    soup = BeautifulSoup(browser.html, 'html.parser')
-                    folha = soup.find_all('table')
-                    folha = str(folha)
-                    pos = folha.find('Tipo de folha:')                
-                    a = folha.find('A', pos)
-                    folha = folha[a:a+2]               
+                    try:
+                        browser.visit(os.environ.get('URL_PROTOCOLO')+protocolo)
+                        soup = BeautifulSoup(browser.html, 'html.parser')
+                        folha = soup.find_all('table')
+                        folha = str(folha)
+                        pos = folha.find('Tipo de folha:')                
+                        a = folha.find('A', pos)
+                        folha = folha[a:a+2]
+                    except:
+                        folha = '.'
 
                     plotagem = {'data': data, 'protocolo':protocolo_f, 'login':login, 'folha':folha}                    
                     temp.append(plotagem)                    
