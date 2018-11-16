@@ -67,7 +67,7 @@ def get_pendentes():
 
         if datetime.datetime.now(tz=tz).hour >= 8 & datetime.datetime.now(tz=tz).hour <= 22:
             time.sleep(60*5)
-        if datetime.datetime.now(tz=tz).hour >= 7 & datetime.datetime.now(tz=tz).hour <= 23:
+        elif datetime.datetime.now(tz=tz).hour >= 7 & datetime.datetime.now(tz=tz).hour <= 23:
             time.sleep(60*10)
         else:
             time.sleep(60*20)
