@@ -28,37 +28,45 @@ def get_pendentes():
         browser.visit(os.environ.get('URL_PENDENTES'))
 
         temp = []
+        pagina = 0
         if 'Nenhum protocolo encontrado.' not in browser.html:
-            soup = BeautifulSoup(browser.html, 'html.parser')
-            plots = soup.find_all('div', attrs={'class': 'titulo'})
+            try:
+                pagina += 1
+                browser.find_link_by_href(f'?p={pagina}').text
+                browser.visit(os.environ.get(URL_PENDENTES)+f'?p={pagina}')
+                
+                soup = BeautifulSoup(browser.html, 'html.parser')
+                plots = soup.find_all('div', attrs={'class': 'titulo'})
 
-            for i, plot in enumerate(plots):
-                if i > 0:
-                    plot = str(plot.text.strip())
-                    data = datetime.datetime.strptime(plot[:16].strip(), '%d/%m/%Y %H:%M').strftime('%d/%m/%Y %H:%M')
-                    protocolo = plot[21:31]
-                    protocolo_f = protocolo[:4]+'x'*4
-                    try:
-                        #login = plot[36:].rstrip('_')
-                        pos = plot[36:].find('_')
-                        login = plot[36:36+pos]
-                        login = (login[:3]+'. .'+login[len(login)-1:]).upper()
-                    except:
-                        login = 'nao-indentificado'
+                for i, plot in enumerate(plots):
+                    if i > 0:
+                        plot = str(plot.text.strip())
+                        data = datetime.datetime.strptime(plot[:16].strip(), '%d/%m/%Y %H:%M').strftime('%d/%m/%Y %H:%M')
+                        protocolo = plot[21:31]
+                        protocolo_f = protocolo[:4]+'x'*4
+                        try:
+                            #login = plot[36:].rstrip('_')
+                            pos = plot[36:].find('_')
+                            login = plot[36:36+pos]
+                            login = (login[:3]+'. .'+login[len(login)-1:]).upper()
+                        except:
+                            login = 'nao-indentificado'
 
-                    try:
-                        browser.visit(os.environ.get('URL_PROTOCOLO')+protocolo)
-                        soup = BeautifulSoup(browser.html, 'html.parser')
-                        folha = soup.find_all('table')
-                        folha = str(folha)
-                        pos = folha.find('Tipo de folha:')                
-                        a = folha.find('A', pos)
-                        folha = folha[a:a+2]
-                    except:
-                        folha = '.'
+                        try:
+                            browser.visit(os.environ.get('URL_PROTOCOLO')+protocolo)
+                            soup = BeautifulSoup(browser.html, 'html.parser')
+                            folha = soup.find_all('table')
+                            folha = str(folha)
+                            pos = folha.find('Tipo de folha:')                
+                            a = folha.find('A', pos)
+                            folha = folha[a:a+2]
+                        except:
+                            folha = '.'
 
-                    plotagem = {'data': data, 'protocolo':protocolo_f, 'login':login, 'folha':folha}                    
-                    temp.append(plotagem)                    
+                        plotagem = {'data': data, 'protocolo':protocolo_f, 'login':login, 'folha':folha}                    
+                        temp.append(plotagem)                    
+            except:
+                break
 
         browser.quit()
 
