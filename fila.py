@@ -69,8 +69,7 @@ def get_pendentes():
                             plotagem = {'data': data, 'protocolo':protocolo_f, 'login':login, 'folha':folha}                    
                             temp.append(plotagem)                    
                 except:
-                    #break
-                    pass
+                    break
 
         browser.quit()
 
