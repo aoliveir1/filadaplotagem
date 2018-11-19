@@ -2,7 +2,7 @@
 <head>
 <style>
 div {
-    padding: 50px;
+    padding: 40px;
     border: 1px solid #4CAF50;
 }
 table{
@@ -10,6 +10,7 @@ table{
 }
 td, th {padding: 2px 15px 2px;
 }
+tr {padding: 25px 0px;}
 </style>
 </head>
 <body>
