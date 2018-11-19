@@ -31,10 +31,10 @@ def get_pendentes():
         pagina = 0
 
         if 'Nenhum protocolo encontrado.' not in browser.html:
-            print(browser.html)
             while True:
                 try:
                     pagina += 1
+                    print(browser.find_link_by_href('?p={}'.format(pagina)).text)
                     browser.find_link_by_href('?p={}'.format(pagina)).text
                     browser.visit(os.environ.get(URL_PENDENTES)+'/?p={}'.format(pagina))
 
