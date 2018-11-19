@@ -32,8 +32,8 @@ def get_pendentes():
         if 'Nenhum protocolo encontrado.' not in browser.html:
             try:
                 pagina += 1
-                browser.find_link_by_href(f'?p={pagina}').text
-                browser.visit(os.environ.get(URL_PENDENTES)+f'?p={pagina}')
+                browser.find_link_by_href('?p={}'.format(pagina)).text
+                browser.visit(os.environ.get(URL_PENDENTES)+'?p={}'.format(pagina))
                 
                 soup = BeautifulSoup(browser.html, 'html.parser')
                 plots = soup.find_all('div', attrs={'class': 'titulo'})
