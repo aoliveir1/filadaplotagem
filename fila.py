@@ -35,7 +35,7 @@ def get_pendentes():
                 try:
                     pagina += 1
                     browser.find_link_by_href('?p={}'.format(pagina)).text
-                    browser.visit(os.environ.get('URL_PENDENTES')+'?p={}'.format(pagina))
+                    #browser.visit(os.environ.get('URL_PENDENTES')+'?p={}'.format(pagina))
                 except:
                     break
                 print(pagina)
