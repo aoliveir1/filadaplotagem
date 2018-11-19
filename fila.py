@@ -19,9 +19,6 @@ def get_pendentes():
     global atualizado
     global temp
 
-
-    temp = []
-    pagina = 0
     while True:    
         browser = Browser('chrome', headless = True)
         browser.visit(os.environ.get('URL_LOGIN'))
@@ -29,12 +26,15 @@ def get_pendentes():
         browser.fill('password', os.environ.get('PASSWORD'))
         browser.find_by_name('login_copista').click()
         browser.visit(os.environ.get('URL_PENDENTES'))
+        
+        temp = []
+        pagina = 0
 
         if 'Nenhum protocolo encontrado.' not in browser.html:
             try:
                 pagina += 1
                 browser.find_link_by_href('?p={}'.format(pagina)).text
-                browser.visit(os.environ.get(URL_PENDENTES)+'?p={}'.format(pagina))
+                browser.visit(os.environ.get(URL_PENDENTES)+'/?p={}'.format(pagina))
                 
                 soup = BeautifulSoup(browser.html, 'html.parser')
                 plots = soup.find_all('div', attrs={'class': 'titulo'})
