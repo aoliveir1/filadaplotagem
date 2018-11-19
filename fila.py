@@ -34,9 +34,9 @@ def get_pendentes():
             while True:
                 try:
                     pagina += 1
-                    print(browser.find_link_by_href('?p={}'.format(pagina)).text)
                     browser.find_link_by_href('?p={}'.format(pagina)).text
                     browser.visit(os.environ.get('URL_PENDENTES')+'?p={}'.format(pagina))
+                    print(browser.url)
 
                     soup = BeautifulSoup(browser.html, 'html.parser')
                     plots = soup.find_all('div', attrs={'class': 'titulo'})
@@ -69,7 +69,8 @@ def get_pendentes():
                             plotagem = {'data': data, 'protocolo':protocolo_f, 'login':login, 'folha':folha}                    
                             temp.append(plotagem)                    
                 except:
-                    break
+                    #break
+                    pass
 
         browser.quit()
 
