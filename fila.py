@@ -31,6 +31,7 @@ def get_pendentes():
         pagina = 0
 
         if 'Nenhum protocolo encontrado.' not in browser.html:
+            print(browser.html)
             while True:
                 try:
                     pagina += 1
