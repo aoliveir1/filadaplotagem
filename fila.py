@@ -37,9 +37,8 @@ def get_pendentes():
                     browser.find_link_by_href('?p={}'.format(pagina)).text                    
                 except:
                     break
-            print(type(pagina))
-            print(pagina)
-            for p in pagina:
+            
+            for p in range(pagina):
                 browser.visit(os.environ.get('URL_PENDENTES')+'?p={}'.format(p))
                 soup = BeautifulSoup(browser.html, 'html.parser')
                 plots = soup.find_all('div', attrs={'class': 'titulo'})
