@@ -15,6 +15,7 @@ td, th {padding: 2px 15px 2px;
 <body>
 <div>
 <h1>Lista de Plotagens Pendentes</h1>	
+<p>Atualizado em: {{atualizado}}</p>
 % if len(protocolos) > 0:
 	<p>Total de protocolos pendentes: {{ len(protocolos) }}</p>
 	<table>
@@ -52,7 +53,6 @@ td, th {padding: 2px 15px 2px;
 % else:
 	<p>Nenhum protocolo encontrado.</p>
 % end
-<p>Atualizado em: {{atualizado}}</p>
 </div>
 </body>
 </html>
